@@ -6,26 +6,28 @@ import trash from "./assets/SVGs/delete.svg";
 const content = document.querySelector("#content");
 
 const mapping = {
-    "mission": {type: "Reward", classOne: "complete-mission-button", classTwo: "success", buttonText: "Complete"},
-    "offense": {type: "Penalty", classOne: "commit-offense-button", classTwo: "failure", buttonText: "Commit"},
+    "missions": {type: "Reward", classOne: "complete-mission-button", classTwo: "success", buttonText: "Complete", data: "complete" },
+    "offenses": {type: "Penalty", classOne: "commit-offense-button", classTwo: "failure", buttonText: "Commit", data: "fail" },
 };
 
 function createCardTemplate(name, desc, type) {
     // The card itself
     const card = document.createElement("div");
     card.classList.add("card", type);
+    card.setAttribute("data-type", type);
 
     // Corner buttons (edit and delete)
     const cornerButtonsContainer = document.createElement("div");
     cornerButtonsContainer.classList.add("corner-buttons-container");
     
     const editButton = document.createElement("img");
-    editButton.classList.add("corner-button");
+    editButton.classList.add("corner-button", "card-button-general");
+    editButton.setAttribute("data-type", "edit");
     editButton.src = pencil;
 
     const deleteButton = document.createElement("img");
-    deleteButton.classList.add("corner-button");
-
+    deleteButton.classList.add("corner-button", "card-button-general");
+    deleteButton.setAttribute("data-type", "delete");
     deleteButton.src = trash;
 
     cornerButtonsContainer.appendChild(editButton);
@@ -49,15 +51,14 @@ function createCardTemplate(name, desc, type) {
 
     // Card description
     const description = document.createElement("p");
-    description.textContent = desc;
+    description.textContent = "\u25CB " + desc;
 
     card.appendChild(description);
-
     return card;
 }
 
 function createTask(name, desc, reward, penalty) {
-    const card = createCardTemplate(name, desc, "task");
+    const card = createCardTemplate(name, desc, "tasks");
     
     // Reward/Penalty text
     const rewardText = document.createElement("p");
@@ -75,8 +76,11 @@ function createTask(name, desc, reward, penalty) {
     const completeBtn = document.createElement("button");
     const failBtn = document.createElement("button");
 
-    completeBtn.classList.add("card-button", "success");
-    failBtn.classList.add("card-button", "failure");
+    completeBtn.classList.add("card-button", "success", "card-button-general");
+    failBtn.classList.add("card-button", "failure", "card-button-general");
+
+    completeBtn.setAttribute("data-type", "complete");
+    failBtn.setAttribute("data-type", "fail");
 
     completeBtn.textContent = "Complete";
     failBtn.textContent = "Fail";
@@ -102,7 +106,8 @@ function createOtherCard(name, desc, points, type) {
     cardButtonsContainer.classList.add("card-buttons-container");
 
     const button = document.createElement("button");
-    button.classList.add(`${info.classOne}`, `${info.classTwo}`, `card-button`);
+    button.classList.add(`${info.classOne}`, `${info.classTwo}`, "card-button", "card-button-general");
+    button.setAttribute("data-type", info.data);
     button.textContent = info.buttonText;
 
     cardButtonsContainer.appendChild(button);
@@ -126,16 +131,18 @@ function displayTasks(user, reset = true) {
     })
 }
 
-function displayMissions(user) {
+function displayMissions(user, reset = true) {
+    if (reset) resetContent();
     user.questManager.missions.forEach(mission => {
-        const missionCard = createOtherCard(mission.name, mission.desc, mission.reward, "mission");
+        const missionCard = createOtherCard(mission.name, mission.desc, mission.reward, "missions");
         content.appendChild(missionCard);
     })
 }
 
-function displayOffenses(user) {
+function displayOffenses(user, reset = true) {
+    if (reset) resetContent();
     user.questManager.offenses.forEach(offense => {
-        const offenseCard = createOtherCard(offense.name, offense.desc, offense.penalty, "offense");
+        const offenseCard = createOtherCard(offense.name, offense.desc, offense.penalty, "offenses");
         content.appendChild(offenseCard);
     })
 }

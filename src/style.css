@@ -136,7 +136,6 @@ aside {
     padding-left: 1.2em;
     box-shadow: 0px 0px 16px 16px rgba(0,0,0,0.4);
     gap: 1em;
-    
 }
 
 aside h1 {
@@ -151,13 +150,14 @@ aside h1 {
 }
 
 .sidebar-button {
+    /* width: fit-content; */
     height: 3em;
     font-size: 1.2em;
-    transition: all 0.1s ease-in-out;
+    transition: all 0.05s ease-in-out;
 }
 
 .sidebar-button:hover, .sidebar-button.active {
-    transform: translateX(10%) scale(1.1);
+    transform: translate(10%, -5%) scale(1.1);
     cursor: pointer;
 }
 
@@ -167,13 +167,13 @@ aside h1 {
 
 /**************CONTENT***************/
 
-.card.task::before { background-color: var(--clr-text); }
-.card.mission::before { background-color: var(--clr-success); }
-.card.offense::before { background-color: var(--clr-failure); }
+.card.tasks::before { background-color: var(--clr-text); }
+.card.missions::before { background-color: var(--clr-success); }
+.card.offenses::before { background-color: var(--clr-failure); }
 
-.card.task:hover { border: 2px solid var(--clr-text); }
-.card.mission:hover { border: 2px solid var(--clr-success); }
-.card.offense:hover { border: 2px solid var(--clr-failure); }
+.card.tasks:hover { border: 2px solid var(--clr-text); }
+.card.missions:hover { border: 2px solid var(--clr-success); }
+.card.offenses:hover { border: 2px solid var(--clr-failure); }
 
 /* Cards */
 #content {
@@ -186,7 +186,6 @@ aside h1 {
     grid-auto-rows: max-content;
     font-size: 90%;
     /* box-shadow: inset 0px 0px 16px 16px rgba(0,0,0,0.4); */
-
 }
 
 .card {
@@ -229,6 +228,10 @@ aside h1 {
     align-items: center;
 
     & p { font-weight: 900;}
+}
+
+.card > p {
+    font-size: 1.1rem;
 }
 
 .card-buttons-container {
@@ -303,7 +306,7 @@ dialog {
     border: none;
     transform: scale(0);
     visibility: hidden;
-    transition: all 0.2s ease-in-out;
+    transition: transform 0.3s ease-in-out, visibility 0s 0.3s;
 
     & > h1 { /* Modal header */
         display: grid;
@@ -314,6 +317,7 @@ dialog {
     &.show {
         transform: scale(1);
         visibility: visible;
+        transition: transform 0.3s ease-in-out, visibility 0s 0s;
     }
 }
 
