@@ -1,0 +1,380 @@
+*, *::before, *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+}
+
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+
+input, button, textarea, select, dialog, form, label {
+    font: inherit;
+    color: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+#root, #__next {
+    isolation: isolate;
+}
+
+ul, li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+
+*:not(i) {
+    font-family: quicksand;
+}
+/***********VARIABLES**************/
+:root {
+    --header-size: 100px;
+    --sidebar-size: 225px;
+
+    --clr-cards: #172a46;
+    --clr-aside: #172a46;
+    --clr-content: #0a192f;
+    --clr-success: #4CAF50;
+    --clr-success-hover: #81C784;
+    --clr-failure: #F44336;
+    --clr-failure-hover: #E57373;
+    --clr-card-text: white;
+    --clr-text: #a4b0cf;
+    --clr-action-btn: #172a46;
+}
+/*************************/
+body {
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: var(--header-size) 1fr;
+    grid-template-columns: var(--sidebar-size) 1fr;
+    color: var(--clr-text);
+}
+
+header {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+aside {
+    grid-area: 1 / 1 / -1 / 2;
+}
+
+#content {
+    grid-area: 2 / 2 / -1 / -1;
+    background-color: var(--clr-content);
+}
+
+header, aside {
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+/**************HEADER***************/
+
+header {
+    z-index: 5;
+}
+
+nav {
+    height: 100%;
+}
+
+.header-buttons-container {
+    display: flex;
+    height: 100%;
+    box-shadow: 0px 0px 16px 16px rgba(0,0,0,0.4);
+}
+
+li:has(.action-button) {
+    flex: 1;
+    border: 1px solid black;
+}
+
+.action-button {
+    height: 100%;
+    width: 100%;
+    font-size: 1.5em;
+    font-weight: 900;
+    background-color: var(--clr-cards);
+}
+
+.action-button:hover {
+    background-color: var(--clr-text);
+    color: var(--clr-action-btn);
+}
+/**************SIDEBAR***************/
+aside {
+    z-index: 6;
+    height: 100dvh;
+    background-color: var(--clr-aside);
+    align-self: start;
+    display: grid;
+    grid-template-rows: var(--header-size) 1fr;
+    padding-left: 1.2em;
+    box-shadow: 0px 0px 16px 16px rgba(0,0,0,0.4);
+    gap: 1em;
+    
+}
+
+aside h1 {
+    font-size: 2.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-buttons-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-button {
+    height: 3em;
+    font-size: 1.2em;
+    transition: all 0.1s ease-in-out;
+}
+
+.sidebar-button:hover, .sidebar-button.active {
+    transform: translateX(10%) scale(1.1);
+    cursor: pointer;
+}
+
+.sidebar-button:hover {
+    filter: drop-shadow(0 0 10px white);
+}
+
+/**************CONTENT***************/
+
+.card.task::before { background-color: var(--clr-text); }
+.card.mission::before { background-color: var(--clr-success); }
+.card.offense::before { background-color: var(--clr-failure); }
+
+.card.task:hover { border: 2px solid var(--clr-text); }
+.card.mission:hover { border: 2px solid var(--clr-success); }
+.card.offense:hover { border: 2px solid var(--clr-failure); }
+
+/* Cards */
+#content {
+    z-index: 1;
+    --gap: 6em;
+    display: grid;
+    padding: var(--gap);
+    gap: var(--gap);
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: max-content;
+    font-size: 90%;
+    /* box-shadow: inset 0px 0px 16px 16px rgba(0,0,0,0.4); */
+
+}
+
+.card {
+    --border-radius: 16px;
+    position: relative;
+    background-color: var(--clr-cards);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2em;
+    gap: 1em;
+    border-radius: var(--border-radius);
+    border: 2px solid transparent;
+    box-shadow: 0px 0px 32px 16px rgba(0,0,0,0.4);
+    transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 32px 28px rgba(0,0,0,0.4);
+    &::before {
+        left: 0;
+    }
+}
+
+.card::before {
+    position: absolute;
+    content: '';
+    z-index: -1;
+    top: 0%;
+    left: -1.5%;
+    height: 100%;
+    width: 100%;
+    border-radius: var(--border-radius);
+    transition: all 0.2s ease-in-out;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & p { font-weight: 900;}
+}
+
+.card-buttons-container {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    margin-top: 2em;
+    width: 80%;
+    align-self: center;
+}
+
+.card-button {
+    padding: 0.7em 0px;
+    width: 50%;
+    text-align: center;
+    border-radius: 16px;
+    font-weight: 900;
+    font-size: 110%;
+    color: var(--clr-card-text);
+}
+
+.complete-mission-button, .complete-offense-button {
+    width: 50%;
+    align-self: center;
+}
+
+.success {
+    background-color: var(--clr-success);
+}
+
+.success:hover {
+    background-color: var(--clr-success-hover);
+}
+
+.failure {
+    background-color: var(--clr-failure);
+}
+
+.failure:hover {
+    background-color: var(--clr-failure-hover);
+}
+
+.corner-buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    width: 100%;
+}
+
+.corner-button {
+    height: 28px;
+    cursor: pointer;
+    filter: invert(83%) sepia(7%) saturate(1021%) hue-rotate(187deg) brightness(84%) contrast(91%);
+    transition: all 0.15s ease-in-out;
+
+}
+
+.corner-button:hover {
+    transform: scale(1.2);
+    filter: invert(83%) sepia(7%) saturate(1021%) hue-rotate(187deg) brightness(84%) contrast(91%) drop-shadow(0 0 10px white);
+}
+
+/************FORM****************/
+dialog {
+    --gap: 1.5rem;
+
+    place-self: center;
+    background-color: var(--clr-cards);
+    border-radius: 16px;
+    padding: var(--gap);
+
+    border: none;
+    transform: scale(0);
+    visibility: hidden;
+    transition: all 0.2s ease-in-out;
+
+    & > h1 { /* Modal header */
+        display: grid;
+        place-self: center;
+        margin-bottom: var(--gap);
+    }
+
+    &.show {
+        transform: scale(1);
+        visibility: visible;
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    font-size: 1em;
+}
+
+.name, .desc {
+    display: flex;
+    flex-direction: column;
+}
+
+[type="text"],[type="number"] {
+    outline: none;
+    border: none;
+    border-radius: 16px;
+    background-color: var(--clr-content);
+    padding: 0.3em 1em;
+    font-size: 1em;
+}
+
+.points-general {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+
+    & * { /* Reward and Penalty divs */
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.form-buttons {
+    display: flex;
+    gap: 1em;
+
+    & button {
+        flex: 1;
+        border-radius: 16px;
+        background-color: var(--clr-content);
+        padding: 0.3em 0;
+
+        &:hover {
+            background-color: var(--clr-text);
+            color: var(--clr-content);
+        }
+    }
+}
+
+input:valid {
+    border: 1.5px solid var(--clr-card-text);
+}
+
+input:invalid {
+    border: 1.5px solid red;
+}
+
+::backdrop {
+    background-color: rgba(0,0,0,0.4);
+}
