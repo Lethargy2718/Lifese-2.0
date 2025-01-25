@@ -329,7 +329,7 @@ form {
     flex-direction: column;
 }
 
-[type="text"],[type="number"] {
+input {
     outline: none;
     border: none;
     border-radius: 16px;
