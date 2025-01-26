@@ -4,7 +4,6 @@ import { buttonConfig } from "./button-config";
 import { StateManager } from "./statemanager";
 import { displayAll } from "./dom-creator"; // DEBUGGING; REMOVE LATER;
 
-
 const user = new User();
 const content = document.querySelector("#content");
 const dialogEl = document.querySelector("dialog");
@@ -23,9 +22,11 @@ const dialogManager = new DialogManager(dialogEl, formEl, dialogHeader, nameEl, 
 const cardButtonConfig = {
     "delete": { callback: () => deleteQuest() },
     "edit": { callback: () => prepareEditDialog() },
-    "complete": { callback: () => console.log("complete") },
-    "fail": { callback: () => console.log("fail") },
-}
+    "complete": { callback: () => finishQuest("complete") },
+    "fail": { callback: () => finishQuest("fail") },
+    "fail-task": { callback: () => finishQuest("fail-task") },
+    "complete-task": { callback: () => finishQuest("complete-task") }
+};
 
 const stateManager = new StateManager(addQuest, editQuest);
 
@@ -95,7 +96,7 @@ sidebarButtonsContainer.addEventListener("click", (e) => {
     buttonConfig[tab].displayFunc(user);
     stateManager.currentTab = tab;
     activateSideButton();
-})
+});
 /******************helpers******************/
 function addQuest() {
     user.questManager.addQuest(stateManager.currentType, nameEl.value, descEl.value, +rewardEl.value, +penaltyEl.value);
@@ -134,13 +135,18 @@ function doCurrentAction() {
 
 function findCurrQuest() {
     return user.questManager.findQuest(stateManager.currentType, stateManager.currentQuestName);
-}
+};
 
 function openCurrDialog() {
     dialogManager.open(stateManager.currentType, buttonConfig[stateManager.currentType], stateManager.currentAction); 
-}
+};
 
 function activateSideButton() {
     sidebarButtonsContainer.querySelector(".active").classList.remove("active");
     Array.from(sidebarButtonsContainer.children).find(button => button.getAttribute("data-type") === stateManager.currentTab).classList.add("active");
+};
+
+function finishQuest(buttonType) {
+    user.questDataManager.endQuest(buttonType, stateManager.currentType, stateManager.currentQuestName);
+    user.displayData();
 }

@@ -79,8 +79,8 @@ function createTask(name, desc, reward, penalty) {
     completeBtn.classList.add("card-button", "success", "card-button-general");
     failBtn.classList.add("card-button", "failure", "card-button-general");
 
-    completeBtn.setAttribute("data-type", "complete");
-    failBtn.setAttribute("data-type", "fail");
+    completeBtn.setAttribute("data-type", "complete-task");
+    failBtn.setAttribute("data-type", "fail-task");
 
     completeBtn.textContent = "Complete";
     failBtn.textContent = "Fail";
