@@ -1,10 +1,10 @@
-import { User } from "./system";
+import { userInit } from "./localStorageInit";
 import { DialogManager } from "./dialog";
 import { buttonConfig } from "./buttonConfig";
 import { StateManager } from "./stateManager";
-import { displayAll } from "./domCreator"; // DEBUGGING; REMOVE LATER;
 
-const user = new User();
+const user = userInit();
+
 const content = document.querySelector("#content");
 const dialogEl = document.querySelector("dialog");
 const dialogHeader = dialogEl.querySelector("h1");
@@ -30,26 +30,6 @@ const cardButtonConfig = {
 };
 
 const stateManager = new StateManager(addQuest, editQuest);
-
-/******************DEBUGGGG******************/
-
-function init() {
-    // Creating tasks
-    user.questManager.addQuest("tasks", "Morning Routine", "Complete your morning routine without distractions", 5, 3);
-    user.questManager.addQuest("tasks", "Workout", "Finish a full-body workout session", 4, 5);
-
-    // Creating missions
-    user.questManager.addQuest("missions", "Study for Exam", "Prepare for and take the exam", 5, 7);
-    user.questManager.addQuest("missions", "Complete Project", "Finish and submit the coding project", 6, 8);
-
-    // Creating offenses
-    user.questManager.addQuest("offenses", "Overeat", "Overeat and disrupt your meal plan", 5, 7);
-    user.questManager.addQuest("offenses", "Skip Prayer", "Skip one or more of your prayers", 2, 3);
-
-    displayAll(user);
-}
-
-init();
 
 /*****************event listeners*******************/
 
@@ -137,11 +117,7 @@ function prepareEditDialog() {
 
 // Deletes the quest picked by pressing on its card.
 function deleteQuest() {
-    user.questManager[stateManager.currentType].splice(
-        user.questManager[stateManager.currentType].findIndex(
-            questObj => questObj.name === stateManager.currentQuestName
-        )
-    , 1);
+    user.questManager.deleteQuest(stateManager.currentType, stateManager.currentQuestName);
     buttonConfig[stateManager.currentTab].displayFunc(user);
 }
 
@@ -163,7 +139,7 @@ function activateSideButton() {
 
 // Finishes the chosen quest based on the button clicked.
 function finishQuest(buttonType) {
-    user.questDataManager.endQuest(buttonType, stateManager.currentType, stateManager.currentQuestName);
+    user.endQuest(buttonType, stateManager.currentType, stateManager.currentQuestName);
     // user.displayData();
     showFeedback();
 }
