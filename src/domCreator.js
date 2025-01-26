@@ -147,11 +147,57 @@ function displayOffenses(user, reset = true) {
     })
 }
 
+function displayStats(user, reset = true) {
+    if (reset) resetContent();
+
+    const statsEmbed = document.createElement("div");
+    statsEmbed.classList.add("stats-embed");
+
+    const statsTitle = document.createElement("h1");
+    statsTitle.id = "statsTitle";
+    statsTitle.textContent = "Your Statistics";
+    statsEmbed.appendChild(statsTitle);
+
+    const statsTable = document.createElement("table");
+    statsTable.id = "stats";
+
+    const tbody = document.createElement("tbody");
+
+    const rows = [
+        { label: "Points:", id: "points" },
+        { label: "Total Points Earned:", id: "totalEarnedPoints" },
+        { label: "Total Points Lost:", id: "totalLostPoints" },
+        { label: "Completed Tasks:", id: "completedTasks" },
+        { label: "Failed Tasks:", id: "failedTasks" },
+        { label: "Completed Missions:", id: "completedMissions" },
+        { label: "Committed Offenses:", id: "committedOffenses" },
+    ];
+
+    rows.forEach(row => {
+        const tr = document.createElement("tr");
+
+        const tdLabel = document.createElement("td");
+        tdLabel.textContent = row.label;
+        tr.appendChild(tdLabel);
+
+        const tdValue = document.createElement("td");
+        tdValue.id = row.id;
+        tdValue.textContent = user[row.id];
+        tr.appendChild(tdValue);
+
+        tbody.appendChild(tr);
+    });
+
+    statsTable.appendChild(tbody);
+
+    statsEmbed.appendChild(statsTable);
+
+    content.appendChild(statsEmbed);
+}
+
 function resetContent() {
     content.innerHTML = "";
 }
 
-function displayStats() {
-    //TODO
-    return 1;
-}
+
+

@@ -46,7 +46,7 @@ function init() {
     user.questManager.addQuest("offenses", "Overeat", "Overeat and disrupt your meal plan", 5, 7);
     user.questManager.addQuest("offenses", "Skip Prayer", "Skip one or more of your prayers", 2, 3);
 
-    // displayAll(user);
+    displayAll(user);
 }
 
 init();

@@ -9,6 +9,7 @@ class DialogManager {
         this.descEl = descEl;
         this.rewardEl = rewardEl;
         this.penaltyEl = penaltyEl;
+        
         form.querySelector("#cancel").addEventListener("click", (e) => {
             e.preventDefault();
             this.close();
@@ -42,7 +43,6 @@ class DialogManager {
     }
 
     setFields(name, desc, reward, penalty) {
-        console.log(reward, penalty);
         this.nameEl.value = name;
         this.descEl.value = desc;
         this.rewardEl.value = reward;
