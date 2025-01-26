@@ -1,5 +1,6 @@
 export { buttonConfig };
-import { displayAll, displayTasks, displayMissions, displayOffenses, displayStats } from "./dom-creator.js";
+import { displayAll, displayTasks, displayMissions, displayOffenses, displayStats } from "./domCreator.js";
+
 const sidebarBtnContainer = document.querySelector(".sidebar-buttons-container");
 const questsBtn = sidebarBtnContainer.querySelector("#allQuestsBtn");
 const tasksBtn = sidebarBtnContainer.querySelector("#tasksBtn");

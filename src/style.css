@@ -165,7 +165,12 @@ aside h1 {
     filter: drop-shadow(0 0 10px white);
 }
 
-/**************CONTENT***************/
+/**************CONTENT:CARDS***************/
+
+#content { 
+    --gap: 6rem;
+    --shadow: 0px 0px 32px 16px rgba(0,0,0,0.4);
+ }
 
 .card.tasks::before { background-color: var(--clr-text); }
 .card.missions::before { background-color: var(--clr-success); }
@@ -176,16 +181,14 @@ aside h1 {
 .card.offenses:hover { border: 2px solid var(--clr-failure); }
 
 /* Cards */
-#content {
+#content:has(.card) {
     z-index: 1;
-    --gap: 6em;
     display: grid;
     padding: var(--gap);
     gap: var(--gap);
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-auto-rows: max-content;
     font-size: 90%;
-    /* box-shadow: inset 0px 0px 16px 16px rgba(0,0,0,0.4); */
 }
 
 .card {
@@ -199,7 +202,7 @@ aside h1 {
     gap: 1em;
     border-radius: var(--border-radius);
     border: 2px solid transparent;
-    box-shadow: 0px 0px 32px 16px rgba(0,0,0,0.4);
+    box-shadow: var(--shadow);
     transition: all 0.2s ease-in-out;
 }
 
@@ -293,7 +296,36 @@ aside h1 {
     transform: scale(1.2);
     filter: invert(83%) sepia(7%) saturate(1021%) hue-rotate(187deg) brightness(84%) contrast(91%) drop-shadow(0 0 10px white);
 }
+/*******CONTENT:STATS************/
+#content:has(.stats-embed) {
+    --gap-local: calc(var(--gap) / 2);
+    padding: var(--gap-local);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+#statsTitle {
+    position: relative;
+    width: 100%;
+    margin-bottom: calc(var(--gap-local) / 2);
+}
+
+.stats-embed {
+    background-color: var(--clr-cards);
+    min-height: 60%;
+    width: 60%;
+    border-radius: 16px;
+    padding: var(--gap-local);
+    box-shadow: var(--shadow);
+}
+
+.stats {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-local)
+}
 /************FORM****************/
 dialog {
     --gap: 1.5rem;
@@ -382,3 +414,35 @@ input:invalid {
 ::backdrop {
     background-color: rgba(0,0,0,0.4);
 }
+/************FEEDBACK STRIP****************/
+
+.feedback-container {
+    z-index: 900;
+    position: fixed;
+    right: 0;
+    bottom: 10%;
+    min-width: 300px;
+    color: white;
+    text-align: center;
+    font-weight: 900;
+    box-shadow: 0 0 16px 16px rgba(0,0,0,0.4);
+    transform: translateX(150%);
+}
+
+.feedback {
+    background-color: green;
+    transition: all 0.3s ease-in-out;
+    height: 100%;
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.75em 1.25em;
+}
+
+.feedback.visible {
+    transform: translateX(-150%);
+}
+
+.feedback.fail {
+    background-color: red;
+}
+/********************************/

@@ -35,7 +35,6 @@ class User {
             committedOffenses: this.committedOffenses
         }
 
-        console.clear();
         console.log(JSON.stringify(data, null, 4));
     }
 }
