@@ -7,8 +7,8 @@ export class StateManager {
         this.currentQuestName;
         this.feedbackTimer;
         this.actions = {
-            "new": addQuest,
-            "edit": editQuest,
+            new: addQuest,
+            edit: editQuest,
         };
-    };
-};
+    }
+}

@@ -1,13 +1,32 @@
-export { displayAll, displayTasks, displayMissions, displayOffenses, displayStats, resetContent };
-
 import pencil from "./assets/SVGs/pencil.svg";
 import trash from "./assets/SVGs/delete.svg";
+
+export {
+    displayAll,
+    displayTasks,
+    displayMissions,
+    displayOffenses,
+    displayStats,
+    resetContent,
+};
 
 const content = document.querySelector("#content");
 
 const mapping = {
-    "missions": {type: "Reward", classOne: "complete-mission-button", classTwo: "success", buttonText: "Complete", data: "complete" },
-    "offenses": {type: "Penalty", classOne: "commit-offense-button", classTwo: "failure", buttonText: "Commit", data: "fail" },
+    missions: {
+        type: "Reward",
+        classOne: "complete-mission-button",
+        classTwo: "success",
+        buttonText: "Complete",
+        data: "complete",
+    },
+    offenses: {
+        type: "Penalty",
+        classOne: "commit-offense-button",
+        classTwo: "failure",
+        buttonText: "Commit",
+        data: "fail",
+    },
 };
 
 function createCardTemplate(name, desc, type) {
@@ -19,7 +38,7 @@ function createCardTemplate(name, desc, type) {
     // Corner buttons (edit and delete)
     const cornerButtonsContainer = document.createElement("div");
     cornerButtonsContainer.classList.add("corner-buttons-container");
-    
+
     const editButton = document.createElement("img");
     editButton.classList.add("corner-button", "card-button-general");
     editButton.setAttribute("data-type", "edit");
@@ -59,7 +78,7 @@ function createCardTemplate(name, desc, type) {
 
 function createTask(name, desc, reward, penalty) {
     const card = createCardTemplate(name, desc, "tasks");
-    
+
     // Reward/Penalty text
     const rewardText = document.createElement("p");
     const penaltyText = document.createElement("p");
@@ -84,14 +103,13 @@ function createTask(name, desc, reward, penalty) {
 
     completeBtn.textContent = "Complete";
     failBtn.textContent = "Fail";
-    
+
     cardButtonsContainer.appendChild(completeBtn);
     cardButtonsContainer.appendChild(failBtn);
 
     card.appendChild(cardButtonsContainer);
-    
 
-    return card
+    return card;
 }
 
 function createOtherCard(name, desc, points, type) {
@@ -106,7 +124,12 @@ function createOtherCard(name, desc, points, type) {
     cardButtonsContainer.classList.add("card-buttons-container");
 
     const button = document.createElement("button");
-    button.classList.add(`${info.classOne}`, `${info.classTwo}`, "card-button", "card-button-general");
+    button.classList.add(
+        `${info.classOne}`,
+        `${info.classTwo}`,
+        "card-button",
+        "card-button-general",
+    );
     button.setAttribute("data-type", info.data);
     button.textContent = info.buttonText;
 
@@ -125,26 +148,41 @@ function displayAll(user) {
 
 function displayTasks(user, reset = true) {
     if (reset) resetContent();
-    user.questManager.tasks.forEach(task => {
-        const taskCard = createTask(task.name, task.desc, task.reward, task.penalty);
+    user.questManager.tasks.forEach((task) => {
+        const taskCard = createTask(
+            task.name,
+            task.desc,
+            task.reward,
+            task.penalty,
+        );
         content.appendChild(taskCard);
-    })
+    });
 }
 
 function displayMissions(user, reset = true) {
     if (reset) resetContent();
-    user.questManager.missions.forEach(mission => {
-        const missionCard = createOtherCard(mission.name, mission.desc, mission.reward, "missions");
+    user.questManager.missions.forEach((mission) => {
+        const missionCard = createOtherCard(
+            mission.name,
+            mission.desc,
+            mission.reward,
+            "missions",
+        );
         content.appendChild(missionCard);
-    })
+    });
 }
 
 function displayOffenses(user, reset = true) {
     if (reset) resetContent();
-    user.questManager.offenses.forEach(offense => {
-        const offenseCard = createOtherCard(offense.name, offense.desc, offense.penalty, "offenses");
+    user.questManager.offenses.forEach((offense) => {
+        const offenseCard = createOtherCard(
+            offense.name,
+            offense.desc,
+            offense.penalty,
+            "offenses",
+        );
         content.appendChild(offenseCard);
-    })
+    });
 }
 
 function displayStats(user, reset = true) {
@@ -173,7 +211,7 @@ function displayStats(user, reset = true) {
         { label: "Committed Offenses:", id: "committedOffenses" },
     ];
 
-    rows.forEach(row => {
+    rows.forEach((row) => {
         const tr = document.createElement("tr");
 
         const tdLabel = document.createElement("td");
@@ -198,6 +236,3 @@ function displayStats(user, reset = true) {
 function resetContent() {
     content.innerHTML = "";
 }
-
-
-

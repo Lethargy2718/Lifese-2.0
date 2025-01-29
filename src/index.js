@@ -1,3 +1,2 @@
 import "./style.css";
-import "./localStorageInit";
-
+import "./eventManager";

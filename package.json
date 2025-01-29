@@ -1,28 +1,39 @@
 {
-  "name": "project-template",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "update": "npx npm-check-updates -u && npm install",
-    "dev": "webpack serve --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
-    "push": "git add . && git commit -m",
-    "postpush": "git push origin main",
-    "deploy": "git branch gh-pages || echo 'Branch gh-pages already exists.' && git checkout gh-pages && git merge main --no-edit && npm run build && git add dist -f && git commit -m 'Deployment commit' && git subtree push --prefix dist origin gh-pages && git checkout main"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "css-loader": "^7.1.2",
-    "html-loader": "^5.1.0",
-    "html-webpack-plugin": "^5.6.3",
-    "style-loader": "^4.0.0",
-    "webpack": "^5.97.1",
-    "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.0",
-    "webpack-merge": "^6.0.1"
-  }
+    "name": "project-template",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "update": "npx npm-check-updates -u && npm install",
+        "dev": "webpack serve --open --config webpack.dev.js",
+        "build": "webpack --config webpack.prod.js",
+        "lint": "eslint src",
+        "pretty": "prettier --write 'src/**/*.{js,json,md}'",
+        "lint-all": "eslint .",
+        "pretty-all": "prettier --write '**/*.{js,json,md}'",
+        "prepush": "npm run lint-all && npm run pretty-all",
+        "push": "git add . && git commit -m",
+        "postpush": "git push origin main",
+        "deploy": "git branch gh-pages || echo 'Branch gh-pages already exists.' && git checkout gh-pages && git merge main --no-edit && npm run build && git add dist -f && git commit -m 'Deployment commit' && git subtree push --prefix dist origin gh-pages && git checkout main"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@eslint/js": "^9.19.0",
+        "css-loader": "^7.1.2",
+        "eslint": "^8.57.1",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^10.0.1",
+        "eslint-plugin-import": "^2.31.0",
+        "html-loader": "^5.1.0",
+        "html-webpack-plugin": "^5.6.3",
+        "prettier": "3.4.2",
+        "style-loader": "^4.0.0",
+        "webpack": "^5.97.1",
+        "webpack-cli": "^6.0.1",
+        "webpack-dev-server": "^5.2.0",
+        "webpack-merge": "^6.0.1"
+    }
 }

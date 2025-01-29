@@ -8,25 +8,40 @@ const user = userInit();
 const content = document.querySelector("#content");
 const dialogEl = document.querySelector("dialog");
 const dialogHeader = dialogEl.querySelector("h1");
-const formEl = dialogEl.querySelector("form")
+const formEl = dialogEl.querySelector("form");
 const submitBtn = formEl.querySelector("#submit");
 const nameEl = formEl.querySelector("#name");
 const descEl = formEl.querySelector("#desc");
 const rewardEl = formEl.querySelector("#reward");
 const penaltyEl = formEl.querySelector("#penalty");
-const headerButtonsContainer = document.querySelector(".header-buttons-container");
-const sidebarButtonsContainer = document.querySelector(".sidebar-buttons-container");
+const headerButtonsContainer = document.querySelector(
+    ".header-buttons-container",
+);
+const sidebarButtonsContainer = document.querySelector(
+    ".sidebar-buttons-container",
+);
 const feedbackEl = document.querySelector(".feedback");
 
-const dialogManager = new DialogManager(dialogEl, formEl, dialogHeader, nameEl, descEl, rewardEl, penaltyEl);
+const dialogManager = new DialogManager(
+    dialogEl,
+    formEl,
+    dialogHeader,
+    nameEl,
+    descEl,
+    rewardEl,
+    penaltyEl,
+);
 
 const cardButtonConfig = {
-    "delete": { callback: () => deleteQuest() },
-    "edit": { callback: () => prepareEditDialog() },
-    "complete": { callback: () => finishQuest("complete"), type: "success" },
-    "fail": { callback: () => finishQuest("fail"), type: "failure" },
-    "fail-task": { callback: () => finishQuest("fail-task"), type: "failure"  },
-    "complete-task": { callback: () => finishQuest("complete-task"), type: "success" },
+    delete: { callback: () => deleteQuest() },
+    edit: { callback: () => prepareEditDialog() },
+    complete: { callback: () => finishQuest("complete"), type: "success" },
+    fail: { callback: () => finishQuest("fail"), type: "failure" },
+    "fail-task": { callback: () => finishQuest("fail-task"), type: "failure" },
+    "complete-task": {
+        callback: () => finishQuest("complete-task"),
+        type: "success",
+    },
 };
 
 const stateManager = new StateManager(addQuest, editQuest);
@@ -48,7 +63,7 @@ headerButtonsContainer.addEventListener("click", (e) => {
 content.addEventListener("click", (e) => {
     const button = e.target.closest(".card-button-general");
     if (!button) return;
-    const card = button.closest(".card"); 
+    const card = button.closest(".card");
     stateManager.currentType = card.getAttribute("data-type"); // Updated currentType
     stateManager.currentQuestName = card.querySelector("h1").textContent; // Get questName from card title (An alternate approach would be data-* attributes. Will think about it.)
     stateManager.currentCardButton = button.getAttribute("data-type"); // Button type (complete/fail/edit/delete)
@@ -67,13 +82,19 @@ submitBtn.addEventListener("click", (e) => {
 // To check if a quest already exists.
 nameEl.addEventListener("input", () => {
     // If editing a quest, ignore if the name written is its current name.
-    if (stateManager.currentAction === "edit" && stateManager.currentQuestName.toLowerCase() === nameEl.value.toLowerCase()) return;
+    if (
+        stateManager.currentAction === "edit" &&
+        stateManager.currentQuestName.toLowerCase() ===
+            nameEl.value.toLowerCase()
+    )
+        return;
 
     // Otherwise, it is invalid if the name already exists.
     if (user.questManager.findQuest(stateManager.currentType, nameEl.value)) {
-        nameEl.setCustomValidity("This already exists in your " + stateManager.currentType + "!");
-    }
-    else nameEl.setCustomValidity("");  
+        nameEl.setCustomValidity(
+            "This already exists in your " + stateManager.currentType + "!",
+        );
+    } else nameEl.setCustomValidity("");
 });
 
 sidebarButtonsContainer.addEventListener("click", (e) => {
@@ -92,9 +113,15 @@ function doCurrentAction() {
     stateManager.actions[stateManager.currentAction]();
 }
 
-// Adds a quest using form data. 
+// Adds a quest using form data.
 function addQuest() {
-    user.questManager.addQuest(stateManager.currentType, nameEl.value, descEl.value, +rewardEl.value, +penaltyEl.value);
+    user.questManager.addQuest(
+        stateManager.currentType,
+        nameEl.value,
+        descEl.value,
+        +rewardEl.value,
+        +penaltyEl.value,
+    );
 }
 
 // Edits the current chosen quest using form data.
@@ -112,34 +139,58 @@ function prepareEditDialog() {
     stateManager.currentAction = "edit";
     openCurrDialog();
     const quest = findCurrQuest();
-    dialogManager.setFields(quest.name, quest.desc, quest.reward??"", quest.penalty??"");
+    dialogManager.setFields(
+        quest.name,
+        quest.desc,
+        quest.reward ?? "",
+        quest.penalty ?? "",
+    );
 }
 
 // Deletes the quest picked by pressing on its card.
 function deleteQuest() {
-    user.questManager.deleteQuest(stateManager.currentType, stateManager.currentQuestName);
+    user.questManager.deleteQuest(
+        stateManager.currentType,
+        stateManager.currentQuestName,
+    );
     buttonConfig[stateManager.currentTab].displayFunc(user);
 }
 
 // Returns the current quest being modified if it exists, otherwise returns undefined.
 function findCurrQuest() {
-    return user.questManager.findQuest(stateManager.currentType, stateManager.currentQuestName);
+    return user.questManager.findQuest(
+        stateManager.currentType,
+        stateManager.currentQuestName,
+    );
 }
 
 // Opens the dialog.
 function openCurrDialog() {
-    dialogManager.open(stateManager.currentType, buttonConfig[stateManager.currentType], stateManager.currentAction); 
+    dialogManager.open(
+        stateManager.currentType,
+        buttonConfig[stateManager.currentType],
+        stateManager.currentAction,
+    );
 }
 
 // Deactivates/Activates sidebar buttons based on the current tab.
 function activateSideButton() {
     sidebarButtonsContainer.querySelector(".active").classList.remove("active");
-    Array.from(sidebarButtonsContainer.children).find(button => button.getAttribute("data-type") === stateManager.currentTab).classList.add("active");
+    Array.from(sidebarButtonsContainer.children)
+        .find(
+            (button) =>
+                button.getAttribute("data-type") === stateManager.currentTab,
+        )
+        .classList.add("active");
 }
 
 // Finishes the chosen quest based on the button clicked.
 function finishQuest(buttonType) {
-    user.endQuest(buttonType, stateManager.currentType, stateManager.currentQuestName);
+    user.endQuest(
+        buttonType,
+        stateManager.currentType,
+        stateManager.currentQuestName,
+    );
     // user.displayData();
     showFeedback();
 }
@@ -149,18 +200,20 @@ function checkSuccess() {
 }
 
 function showFeedback() {
-    feedbackEl.classList.add("visible")
+    feedbackEl.classList.add("visible");
     const quest = findCurrQuest();
 
     if (checkSuccess()) {
         feedbackEl.textContent = "You gained " + quest.reward + " points!";
         feedbackEl.classList.remove("fail");
-    }
-    else {
+    } else {
         feedbackEl.classList.add("fail");
         feedbackEl.textContent = "You lost " + quest.penalty + " points.";
     }
 
     if (stateManager.feedbackTimer) clearTimeout(stateManager.feedbackTimer);
-    stateManager.feedbackTimer = setTimeout(() => feedbackEl.classList.remove("visible"), 4000);
+    stateManager.feedbackTimer = setTimeout(
+        () => feedbackEl.classList.remove("visible"),
+        4000,
+    );
 }
