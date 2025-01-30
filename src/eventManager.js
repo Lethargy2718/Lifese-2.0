@@ -51,7 +51,10 @@ const stateManager = new StateManager(addQuest, editQuest);
 headerButtonsContainer.addEventListener("click", (e) => {
     const button = e.target.closest("button");
 
-    if (button.getAttribute("data-type") === "spend") return; // TODO
+    if (button.getAttribute("data-type") === "dropdown") {
+        dropdown();
+        return;
+    }    
 
     stateManager.currentType = button.getAttribute("data-type");
     stateManager.currentTab = stateManager.currentType;
@@ -216,4 +219,8 @@ function showFeedback() {
         () => feedbackEl.classList.remove("visible"),
         4000,
     );
+}
+
+function dropdown() {
+    console.log("dropping down baby");
 }

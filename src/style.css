@@ -52,6 +52,10 @@ button {
 :root {
     --header-size: 100px;
     --sidebar-size: 225px;
+    --header-font-size: clamp(0.8rem, 0.8rem + 0.75vw, 25px);
+
+    --header-size-small: calc(var(--header-size) / 1.5);
+    
 
     --clr-cards: #172a46;
     --clr-aside: #172a46;
@@ -77,6 +81,7 @@ header {
     grid-area: 1 / 2 / 2 / 3;
 }
 
+
 aside {
     grid-area: 1 / 1 / -1 / 2;
 }
@@ -84,6 +89,7 @@ aside {
 #content {
     grid-area: 2 / 2 / -1 / -1;
     background-color: var(--clr-content);
+    --gap-local: calc(var(--gap) / 2);
 }
 
 header, aside {
@@ -92,31 +98,44 @@ header, aside {
     left: 0;
 }
 
+.smallscreen-header { 
+    display: none;
+}
+
+#dropdownBtn {
+    display: none;
+}
 /**************HEADER***************/
 
 header {
     z-index: 5;
+    background-color: var(--clr-action-btn);
+    box-shadow: 0px 0px 16px 16px rgba(0,0,0,0.4);
 }
 
 nav {
     height: 100%;
+    --border: 1px solid black;
 }
 
 .header-buttons-container {
     display: flex;
     height: 100%;
-    box-shadow: 0px 0px 16px 16px rgba(0,0,0,0.4);
 }
 
-li:has(.action-button) {
+nav li:not(:has(i)) {
     flex: 1;
-    border: 1px solid black;
+    border-right: var(--border);
+
+    &:first-child {
+        border-left: var(--border);
+    }
 }
 
 .action-button {
     height: 100%;
     width: 100%;
-    font-size: 1.5em;
+    font-size: var(--header-font-size);
     font-weight: 900;
     background-color: var(--clr-cards);
 }
@@ -188,11 +207,12 @@ aside h1 {
     gap: var(--gap);
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-auto-rows: max-content;
-    font-size: 90%;
 }
 
 .card {
     --border-radius: 16px;
+    font-size: 90%;
+
     position: relative;
     background-color: var(--clr-cards);
     display: flex;
@@ -208,9 +228,7 @@ aside h1 {
 
 .card:hover {
     box-shadow: 0px 0px 32px 28px rgba(0,0,0,0.4);
-    &::before {
-        left: 0;
-    }
+    &::before { left: 0; }
 }
 
 .card::before {
@@ -231,28 +249,34 @@ aside h1 {
     align-items: center;
 
     & p { font-weight: 900;}
+
+    & h1 {
+        font-size: clamp(1.5rem, 1.3rem + 0.75vw, 3rem);
+        word-break: break-all;
+    }
 }
 
 .card > p {
-    font-size: 1.1rem;
+    font-size: 1.1em;
 }
 
 .card-buttons-container {
     display: flex;
-    gap: 1em;
     justify-content: center;
-    margin-top: 2em;
-    width: 80%;
     align-self: center;
+    margin-top: 2em;
+    gap: 1em;
+    width: 100%;
+    min-height: 2.5em;
 }
 
 .card-button {
-    padding: 0.7em 0px;
-    width: 50%;
+    width: max(100px, 35%);
     text-align: center;
     border-radius: 16px;
     font-weight: 900;
-    font-size: 110%;
+    font-size: clamp(0.8em, 0.8em + 0.2vw, 1.5em);
+    padding: 0.7em 0;
     color: var(--clr-card-text);
 }
 
@@ -298,7 +322,6 @@ aside h1 {
 }
 /*******CONTENT:STATS************/
 #content:has(.stats-embed) {
-    --gap-local: calc(var(--gap) / 2);
     padding: var(--gap-local);
     display: flex;
     justify-content: center;
@@ -310,21 +333,22 @@ aside h1 {
     position: relative;
     width: 100%;
     margin-bottom: calc(var(--gap-local) / 2);
+    font-size: clamp(1rem, 1.3rem + 0.5vw, 2rem);
 }
 
 .stats-embed {
     background-color: var(--clr-cards);
     min-height: 60%;
-    width: max(500px, 60%);
-    /* width: 500px; */
+    width: max(420px, 70%);
     border-radius: 16px;
     padding: var(--gap-local);
     box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
 }
 
 #stats {
-    height: 100%;
-    width: 100%;
+    flex: 1;
     box-shadow: inset 0 0 10px 10px rgba(0,0,0,0.2);
     background-color: var(--clr-content);
     border-radius: 16px;
@@ -334,20 +358,12 @@ aside h1 {
 td {
     padding: 1em;
     font-weight: 900;
-    font-size: 1.2em;
+    font-size: clamp(0.7rem, 0.7rem + 0.55vw, 1.7rem);
 }
 
 td:first-child::before {
     content: "\0025CB\000020";
 }
-
-
-/* td:nth-child(2) {
-    border-radius: 50%;
-    background-color: white;
-    text-align: center;
-} */
-
 
 /************FORM****************/
 dialog {
@@ -468,4 +484,62 @@ input:invalid {
 .feedback.fail {
     background-color: red;
 }
-/********************************/
+/**************MEDIA QUERIES******************/
+@media (max-width: 830px) {
+    aside {
+        display: none;
+    }
+
+    body {
+        grid-template-columns: 0fr;
+        grid-template-rows: var(--header-size-small) 1fr;
+    }
+
+    /***************HEADER***************/
+    #dropdownBtn {
+        display: list-item;
+        border-right: var(--border);
+        align-self: center;
+        padding: 1em;
+        
+    }
+    
+    
+    /****************STATS********************/
+    #content:has(.stats-embed) {
+        padding: 0;
+        min-width: 0;
+    }
+
+    .stats-embed {
+        width: 100%;
+        min-height: 90%;
+        margin: 0 2em;
+    }
+
+    #stats {
+        padding: 1em;
+    }
+
+    td {
+        font-size: clamp(1rem, 0.6rem + 0.2vw, 1.2rem);
+    }
+}
+
+@media (max-width: 600px) {
+    #content { --gap: 2.5rem; }
+}
+
+@media (max-width: 400px) {
+    #content:has(.card) {
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+       
+    }
+
+    td { 
+        font-size: 0.85rem;
+        padding: 0.6em;
+     }
+}
+
+    

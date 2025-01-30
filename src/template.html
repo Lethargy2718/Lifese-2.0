@@ -12,10 +12,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="backdrop active"></div>
     <header>
         <nav>
             <ul class="header-buttons-container">
+                <li><button class="action-button" id="dropdownBtn" data-type="dropdown"><i class="fa-solid fa-caret-down"></i></button></li>
                 <li><button class="action-button" id="taskBtn" data-type="tasks">New Task</button></li>
                 <li><button class="action-button" id="missionBtn" data-type="missions">New Mission</button></li>
                 <li><button class="action-button" id="offenseBtn" data-type="offenses">New Offense</button></li>
@@ -59,7 +59,7 @@
         <form>
             <div class="name">
                 <label for="name">* Name</label>
-                <input type="text" id="name" name="name" placeholder="e.g. Workout" maxlength="25" autofocus required/>    
+                <input type="text" id="name" name="name" placeholder="e.g. Workout" maxlength="16" autofocus required/>    
             </div>
 
             <div class="desc">

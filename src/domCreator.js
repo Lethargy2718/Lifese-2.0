@@ -61,7 +61,7 @@ function createCardTemplate(name, desc, type) {
     cardHeader.textContent = name;
     const cardType = document.createElement("p");
     cardType.id = "cardType";
-    cardType.textContent = type;
+    cardType.textContent = type.substring(0, type.length - 1);
 
     cardHeaderContainer.appendChild(cardHeader);
     cardHeaderContainer.appendChild(cardType);
