@@ -15,7 +15,7 @@
         "prepush": "npm run lint-all && npm run pretty-all",
         "push": "git add . && git commit -m",
         "postpush": "git push origin main",
-        "deploy": "git branch gh-pages || echo 'Branch gh-pages already exists.' && git checkout gh-pages && git merge main --no-edit && npm run build && git add dist -f && git commit -m 'Deployment commit' && git subtree push --prefix dist origin gh-pages --force && git checkout main"
+        "deploy": "git branch gh-pages || echo 'Branch gh-pages already exists.' && git checkout gh-pages && git merge main --no-edit && npm run build && git add dist -f && git commit -m 'Deployment commit' && git subtree push --prefix dist origin gh-pages && git checkout main"
     },
     "keywords": [],
     "author": "",
