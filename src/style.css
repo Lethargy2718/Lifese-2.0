@@ -92,7 +92,7 @@ aside {
     --gap-local: calc(var(--gap) / 2);
 }
 
-header, aside.sidebar {
+header, aside {
     position: sticky;
     top: 0;
     left: 0;
@@ -371,7 +371,7 @@ dialog {
 
     place-self: center;
     background-color: var(--clr-cards);
-    border-radius: 16px;
+    border-radius: 10px;
     padding: var(--gap);
 
     border: none;
@@ -389,6 +389,8 @@ dialog {
         transform: scale(1);
         visibility: visible;
         transition: transform 0.3s ease-in-out, visibility 0s 0s;
+        border: 1px solid var(--clr-text);
+
     }
 }
 
@@ -451,7 +453,7 @@ input:invalid {
 }
 
 ::backdrop {
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.6);
 }
 /************FEEDBACK STRIP****************/
 
@@ -499,7 +501,7 @@ input:invalid {
         padding: 1em;
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         grid-template-rows: unset;
-        align-items: stretch;
+        justify-content: center;
     }
 
     aside.active {
@@ -575,12 +577,15 @@ input:invalid {
 }
 
 @media (max-width: 600px) {
-    #content { --gap: 2.5rem; }
+    #content {
+        --gap: 3rem; 
+    }
 }
 
 @media (max-width: 400px) {
     #content:has(.card) {
         grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        --gap: 1.75rem;
        
     }
 
