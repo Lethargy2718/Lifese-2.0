@@ -92,7 +92,7 @@ aside {
     --gap-local: calc(var(--gap) / 2);
 }
 
-header, aside {
+header, aside.sidebar {
     position: sticky;
     top: 0;
     left: 0;
@@ -485,9 +485,53 @@ input:invalid {
     background-color: red;
 }
 /**************MEDIA QUERIES******************/
+
 @media (max-width: 830px) {
     aside {
         display: none;
+        position: absolute;
+        top: var(--header-size-small);
+        left: 0;
+        width: 100%;
+        height: auto;
+        background-color: var(--clr-aside);
+        z-index: 1000;
+        padding: 1em;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        grid-template-rows: unset;
+        align-items: stretch;
+    }
+
+    aside.active {
+        display: grid;
+    }
+
+    #asideTitle {
+        display: none;
+    }
+
+    .sidebar-buttons-container {
+        gap: 0.5em;
+        padding: 0;
+    }
+
+    .sidebar-button {
+        height: auto;
+        padding: 1em;
+        font-size: 1rem;
+        transform: none !important;
+        margin: 0;
+        text-align: left;
+        border-radius: 4px;
+    }
+
+    .sidebar-button i {
+        margin-right: 0.8em;
+    }
+
+    header {
+        position: relative;
+        z-index: 1001;
     }
 
     body {
@@ -502,6 +546,10 @@ input:invalid {
         align-self: center;
         padding: 1em;
         
+    }
+
+    #statsTitle {
+        display: none;
     }
     
     

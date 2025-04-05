@@ -21,6 +21,9 @@ const sidebarButtonsContainer = document.querySelector(
     ".sidebar-buttons-container",
 );
 const feedbackEl = document.querySelector(".feedback");
+const dropdownBtn = document.querySelector("#dropdownBtn");
+const aside = document.querySelector("aside");
+const sidebarButtons = document.querySelectorAll(".sidebar-button");
 
 const dialogManager = new DialogManager(
     dialogEl,
@@ -54,7 +57,7 @@ headerButtonsContainer.addEventListener("click", (e) => {
     if (button.getAttribute("data-type") === "dropdown") {
         dropdown();
         return;
-    }    
+    }
 
     stateManager.currentType = button.getAttribute("data-type");
     stateManager.currentTab = stateManager.currentType;
@@ -221,6 +224,25 @@ function showFeedback() {
     );
 }
 
-function dropdown() {
-    console.log("dropping down baby");
-}
+// Dropdown
+
+dropdownBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    aside.classList.toggle("active");
+});
+
+sidebarButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        aside.classList.remove("active");
+    });
+});
+
+document.addEventListener("click", (e) => {
+    if (!aside.contains(e.target) && !dropdownBtn.contains(e.target)) {
+        aside.classList.remove("active");
+    }
+});
+
+aside.addEventListener("click", (e) => {
+    e.stopPropagation();
+});
