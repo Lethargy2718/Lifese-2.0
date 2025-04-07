@@ -1,15 +1,7 @@
 export { DialogManager };
 
 class DialogManager {
-    constructor(
-        dialog,
-        form,
-        dialogHeader,
-        nameEl,
-        descEl,
-        rewardEl,
-        penaltyEl,
-    ) {
+    constructor(dialog, form, dialogHeader, nameEl, descEl, rewardEl, penaltyEl) {
         this.dialog = dialog;
         this.form = form;
         this.dialogHeader = dialogHeader;
@@ -69,9 +61,7 @@ class DialogManager {
                 actionText = "Edit this ";
                 break;
             default:
-                throw new Error(
-                    `${currentAction} is not a valid action. Valid actions are "new" and "edit" (strings).`,
-                );
+                throw new Error(`${currentAction} is not a valid action. Valid actions are "new" and "edit" (strings).`);
         }
 
         this.dialogHeader.textContent = actionText + typeText;

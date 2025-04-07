@@ -1,20 +1,13 @@
-import {
-    displayAll,
-    displayTasks,
-    displayMissions,
-    displayOffenses,
-    displayStats,
-} from "./domCreator";
+import { displayAll, displayTasks, displayMissions, displayOffenses, displayStats, displaySpend } from "./domCreator";
 export { buttonConfig };
 
-const sidebarBtnContainer = document.querySelector(
-    ".sidebar-buttons-container",
-);
+const sidebarBtnContainer = document.querySelector(".sidebar-buttons-container");
 const questsBtn = sidebarBtnContainer.querySelector("#allQuestsBtn");
 const tasksBtn = sidebarBtnContainer.querySelector("#tasksBtn");
 const missionsBtn = sidebarBtnContainer.querySelector("#missionsBtn");
 const offensesBtn = sidebarBtnContainer.querySelector("#offensesBtn");
 const statsBtn = sidebarBtnContainer.querySelector("#statsBtn");
+const spendBtn = sidebarBtnContainer.querySelector("#spendBtn");
 
 const buttonConfig = {
     tasks: {
@@ -37,4 +30,5 @@ const buttonConfig = {
     },
     quests: { displayFunc: displayAll, sideBtn: questsBtn },
     stats: { displayFunc: displayStats, sideBtn: statsBtn },
+    spend: { displayFunc: displaySpend, sideBtn: spendBtn },
 };

@@ -84,9 +84,7 @@ class QuestManager {
     }
 
     addQuest(type, name, desc, reward, penalty, addToLocal = true) {
-        this[type].push(
-            QuestFactory.createQuest(type, name, desc, reward, penalty),
-        );
+        this[type].push(QuestFactory.createQuest(type, name, desc, reward, penalty));
 
         if (addToLocal) {
             const typeArr = JSON.parse(localStorage.getItem(type)) || [];
@@ -104,9 +102,7 @@ class QuestManager {
     }
 
     findQuest(type, questName) {
-        return this[type].find(
-            (quest) => quest.name.toLowerCase() === questName.toLowerCase(),
-        );
+        return this[type].find((quest) => quest.name.toLowerCase() === questName.toLowerCase());
     }
 
     deleteQuestFromStorage(type, questName) {
@@ -119,16 +115,7 @@ class QuestManager {
 }
 
 class User {
-    constructor(
-        points = 0,
-        totalEarnedPoints = 0,
-        totalLostPoints = 0,
-        completedTasks = 0,
-        failedTasks = 0,
-        completedMissions = 0,
-        committedOffenses = 0,
-        questManager = new QuestManager(),
-    ) {
+    constructor(points = 0, totalEarnedPoints = 0, totalLostPoints = 0, completedTasks = 0, failedTasks = 0, completedMissions = 0, committedOffenses = 0, questManager = new QuestManager()) {
         this.points = points;
         this.totalEarnedPoints = totalEarnedPoints;
         this.totalLostPoints = totalLostPoints;
@@ -145,7 +132,6 @@ class User {
         };
 
         this.questManager = questManager;
-        // this.questDataManager = new QuestDataManager(this);
     }
 
     addPoints(extraPoints) {
@@ -193,10 +179,17 @@ class User {
     }
 
     endQuest(buttonType, questType, name) {
-        this.buttonMapping[buttonType](
-            this.questManager.findQuest(questType, name),
-        );
+        this.buttonMapping[buttonType](this.questManager.findQuest(questType, name));
         this.updateLocalStorage();
+    }
+
+    spendPoints(amount) {
+        if (amount <= this.points) {
+            this.points -= amount;
+            this.updateLocalStorage();
+            return true;
+        }
+        return false;
     }
 
     updateLocalStorage() {
@@ -209,41 +202,3 @@ class User {
         localStorage.setItem("committedOffenses", this.committedOffenses);
     }
 }
-
-/*
-class QuestDataManager {
-    constructor(user) {
-        this.user = user;
-        this.buttonMapping = {
-            "complete-task": (quest) => this.completeTask(quest),
-            "fail-task": (quest) => this.failTask(quest),
-            "complete": (quest) => this.completeMission(quest),
-            "fail": (quest) => this.commitOffense(quest)
-        };
-    }
-
-    completeTask(task) {
-        this.user.addPoints(task.reward);
-        this.user.completedTasks++;
-    }
-
-    failTask(task) {
-        this.user.removePoints(task.penalty);
-        this.user.failedTasks++;
-    }
-
-    completeMission(mission) {
-        this.user.addPoints(mission.reward);
-        this.user.completedMissions++;
-    }
-
-    commitOffense(offense) {
-        this.user.removePoints(offense.penalty);
-        this.user.committedOffenses++;
-    }
-
-    endQuest(buttonType, questType, name) {
-        this.buttonMapping[buttonType](this.user.questManager.findQuest(questType, name));
-    }
-}
-*/

@@ -1,15 +1,6 @@
 import pencil from "./assets/SVGs/pencil.svg";
 import trash from "./assets/SVGs/delete.svg";
 
-export {
-    displayAll,
-    displayTasks,
-    displayMissions,
-    displayOffenses,
-    displayStats,
-    resetContent,
-};
-
 const content = document.querySelector("#content");
 
 const mapping = {
@@ -124,12 +115,7 @@ function createOtherCard(name, desc, points, type) {
     cardButtonsContainer.classList.add("card-buttons-container");
 
     const button = document.createElement("button");
-    button.classList.add(
-        `${info.classOne}`,
-        `${info.classTwo}`,
-        "card-button",
-        "card-button-general",
-    );
+    button.classList.add(`${info.classOne}`, `${info.classTwo}`, "card-button", "card-button-general");
     button.setAttribute("data-type", info.data);
     button.textContent = info.buttonText;
 
@@ -139,53 +125,38 @@ function createOtherCard(name, desc, points, type) {
     return card;
 }
 
-function displayAll(user) {
+export function displayAll(user) {
     resetContent();
     displayTasks(user, false);
     displayMissions(user, false);
     displayOffenses(user, false);
 }
 
-function displayTasks(user, reset = true) {
+export function displayTasks(user, reset = true) {
     if (reset) resetContent();
     user.questManager.tasks.forEach((task) => {
-        const taskCard = createTask(
-            task.name,
-            task.desc,
-            task.reward,
-            task.penalty,
-        );
+        const taskCard = createTask(task.name, task.desc, task.reward, task.penalty);
         content.appendChild(taskCard);
     });
 }
 
-function displayMissions(user, reset = true) {
+export function displayMissions(user, reset = true) {
     if (reset) resetContent();
     user.questManager.missions.forEach((mission) => {
-        const missionCard = createOtherCard(
-            mission.name,
-            mission.desc,
-            mission.reward,
-            "missions",
-        );
+        const missionCard = createOtherCard(mission.name, mission.desc, mission.reward, "missions");
         content.appendChild(missionCard);
     });
 }
 
-function displayOffenses(user, reset = true) {
+export function displayOffenses(user, reset = true) {
     if (reset) resetContent();
     user.questManager.offenses.forEach((offense) => {
-        const offenseCard = createOtherCard(
-            offense.name,
-            offense.desc,
-            offense.penalty,
-            "offenses",
-        );
+        const offenseCard = createOtherCard(offense.name, offense.desc, offense.penalty, "offenses");
         content.appendChild(offenseCard);
     });
 }
 
-function displayStats(user, reset = true) {
+export function displayStats(user, reset = true) {
     if (reset) resetContent();
 
     const statsEmbed = document.createElement("div");
@@ -233,6 +204,57 @@ function displayStats(user, reset = true) {
     content.appendChild(statsEmbed);
 }
 
-function resetContent() {
+export function displaySpend(user, reset = true) {
+    if (reset) resetContent();
+
+    const container = document.createElement("div");
+    container.classList.add("spend-embed");
+
+    // Title
+    const title = document.createElement("h1");
+    title.textContent = "Spend Your Points";
+    container.appendChild(title);
+
+    // Points Container
+    const pointsContainer = document.createElement("div");
+    pointsContainer.classList.add("points-container");
+
+    // Display points and time
+    const pointsDisplay = document.createElement("p");
+    pointsDisplay.classList.add("points-display");
+    pointsDisplay.textContent = `You have ${user.points} points (${user.points * 10} minutes)`;
+    pointsContainer.appendChild(pointsDisplay);
+
+    // Points Input
+    const pointsInput = document.createElement("input");
+    pointsInput.classList.add("points-input");
+    pointsInput.type = "number";
+    pointsInput.placeholder = "Enter points to spend";
+    pointsInput.min = 0;
+    pointsInput.max = user.points;
+    pointsContainer.appendChild(pointsInput);
+
+    // Form
+    const pointsForm = document.createElement("form");
+    pointsForm.classList.add("points-form");
+    pointsForm.appendChild(pointsContainer);
+
+    // Button
+    const spendBtn = document.createElement("button");
+    spendBtn.textContent = "Spend Points";
+    spendBtn.classList.add("card-button", "success");
+    spendBtn.id = "spendFormBtn";
+    pointsForm.appendChild(spendBtn);
+
+    // Append the form to the container
+    container.appendChild(pointsForm);
+
+    // Append the container to the content
+    content.appendChild(container);
+}
+
+
+
+export function resetContent() {
     content.innerHTML = "";
 }
