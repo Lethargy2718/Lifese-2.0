@@ -9,13 +9,14 @@ class Feedback {
 
     startTimeout() {
         if (this.feedbackTimer) clearTimeout(this.feedbackTimer);
-        this.feedbackTimer = setTimeout(() => feedbackEl.classList.remove("visible"), 4000);
+        this.feedbackTimer = setTimeout(() => feedbackEl.classList.remove("visible"), this.time);
     }
 
     show(text, success = true) {
         this.feedbackEl.classList.add("visible");
         this.setText(text);
         this.setState(success);
+        this.startTimeout();
     }
 
     setText(text) {
