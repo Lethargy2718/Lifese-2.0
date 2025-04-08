@@ -2,7 +2,7 @@ import { userInit } from "./localStorageInit";
 import { DialogManager } from "./dialog";
 import { buttonConfig } from "./buttonConfig";
 import { StateManager } from "./stateManager";
-import { feedback } from "../Feedback";
+import { feedback } from "./Feedback";
 
 const user = userInit();
 
