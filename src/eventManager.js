@@ -3,6 +3,7 @@ import { DialogManager } from "./dialog";
 import { buttonConfig } from "./buttonConfig";
 import { StateManager } from "./stateManager";
 import { feedback } from "./Feedback";
+import { pointsToTime } from "./utils/pointsToTime";
 
 const user = userInit();
 
@@ -55,8 +56,15 @@ headerButtonsContainer.addEventListener("click", (e) => {
 
 // For all card button clicks.
 content.addEventListener("click", (e) => {
+    if (e.target.closest("#spendFormBtn")) {
+        e.preventDefault();
+        spend();
+        return;
+    }
+
     const button = e.target.closest(".card-button-general");
     if (!button) return;
+
     const card = button.closest(".card");
     stateManager.currentType = card.getAttribute("data-type"); // Updated currentType
     stateManager.currentQuestName = card.querySelector("h1").textContent; // Get questName from card title (An alternate approach would be data-* attributes. Will think about it.)
@@ -185,3 +193,23 @@ document.addEventListener("click", (e) => {
 aside.addEventListener("click", (e) => {
     e.stopPropagation();
 });
+
+// Spend
+
+function spend() {
+    const pointsInput = content.querySelector(".points-input");
+    const pointsInputVal = pointsInput.value;
+    if (pointsInputVal === "") return;
+    const pointsToSpend = +pointsInputVal;
+    if (pointsToSpend === 0) {
+        feedback.show("You can't spend 0 points!", false);
+        return;
+    }
+    if (pointsToSpend > 0 && pointsToSpend <= user.points) {
+        user.spendPoints(pointsToSpend);
+        feedback.show(`You spent ${pointsToSpend} ${pointsToSpend === 1 ? "point" : "points"}! Remember to set a timer on ${pointsToTime(pointsToSpend)}.`, true);
+    } else {
+        feedback.show("You don't have enough points!", false);
+    }
+    buttonConfig[stateManager.currentTab].displayFunc(user);
+}
