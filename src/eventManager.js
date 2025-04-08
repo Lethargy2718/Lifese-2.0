@@ -2,6 +2,7 @@ import { userInit } from "./localStorageInit";
 import { DialogManager } from "./dialog";
 import { buttonConfig } from "./buttonConfig";
 import { StateManager } from "./stateManager";
+import { feedback } from "../Feedback";
 
 const user = userInit();
 
@@ -16,7 +17,6 @@ const rewardEl = formEl.querySelector("#reward");
 const penaltyEl = formEl.querySelector("#penalty");
 const headerButtonsContainer = document.querySelector(".header-buttons-container");
 const sidebarButtonsContainer = document.querySelector(".sidebar-buttons-container");
-const feedbackEl = document.querySelector(".feedback");
 const dropdownBtn = document.querySelector("#dropdownBtn");
 const aside = document.querySelector("aside");
 const sidebarButtons = document.querySelectorAll(".sidebar-button");
@@ -150,7 +150,6 @@ function activateSideButton() {
 // Finishes the chosen quest based on the button clicked.
 function finishQuest(buttonType) {
     user.endQuest(buttonType, stateManager.currentType, stateManager.currentQuestName);
-    // user.displayData();
     showFeedback();
 }
 
@@ -159,19 +158,9 @@ function checkSuccess() {
 }
 
 function showFeedback() {
-    feedbackEl.classList.add("visible");
     const quest = findCurrQuest();
-
-    if (checkSuccess()) {
-        feedbackEl.textContent = "You gained " + quest.reward + " points!";
-        feedbackEl.classList.remove("fail");
-    } else {
-        feedbackEl.classList.add("fail");
-        feedbackEl.textContent = "You lost " + quest.penalty + " points.";
-    }
-
-    if (stateManager.feedbackTimer) clearTimeout(stateManager.feedbackTimer);
-    stateManager.feedbackTimer = setTimeout(() => feedbackEl.classList.remove("visible"), 4000);
+    if (checkSuccess()) feedback.show("You gained " + quest.reward + " points!", true);
+    else feedback.show("You lost " + quest.penalty + " points.", false);
 }
 
 // Dropdown

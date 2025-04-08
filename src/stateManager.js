@@ -5,7 +5,6 @@ export class StateManager {
         this.currentAction = "new";
         this.currentCardButton;
         this.currentQuestName;
-        this.feedbackTimer;
         this.actions = {
             new: addQuest,
             edit: editQuest,
