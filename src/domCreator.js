@@ -253,8 +253,6 @@ export function displaySpend(user, reset = true) {
     content.appendChild(container);
 }
 
-
-
 export function resetContent() {
     content.innerHTML = "";
 }
