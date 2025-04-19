@@ -510,15 +510,17 @@ input:invalid {
 
 .feedback {
     background-color: green;
-    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
     height: 100%;
     width: 100%;
     font-size: 1rem;
     padding: 0.75em 1.25em;
+    transition: background-color 0.3s ease-in, transform 0.3s ease-in;
+
 }
 
 .feedback.visible {
     transform: translateX(-150%);
+    transition: background-color 0.45s ease-out, transform 0.45s ease-out;
 }
 
 .feedback.fail {
