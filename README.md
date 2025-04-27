@@ -4,7 +4,7 @@ Have you ever felt a guilty pleasure before? You know, just having fun in your f
 1. Not having fun during your free time
 2. Working all the time instead, which will inevitably lead to **burnout**
 
-If only there was a way to accurately convert your hardwork into free time.. 
+If only there were a way to accurately convert your hard work into free time... 
 
 
 **Oh, right! That's *exactly* why I made Lifese!**
@@ -12,6 +12,8 @@ If only there was a way to accurately convert your hardwork into free time..
 ---
 
 ## How It Works
+
+### Quests
 
 In Lifese 2.0, you can create three types of **Quests**:
 
@@ -27,13 +29,19 @@ In Lifese 2.0, you can create three types of **Quests**:
   Special goals where you gain points if you succeed, or lose points if you fail.  
   *Example: studying for an exam, cleaning your room by a deadline.*
 
-For each **mission** and **offense**, you will assign a number of **points**. Those **points** will be your life's currency.
+### Points
 
-Each **point** is worth **10 minutes**. So if you assign **1 point** to a **Mission** like reading, you earn **1 point** every time you complete. That's 10 minutes of free time!
+- For each **Mission**, **Offense**, and **Task**, you will assign a number of **points**. Those **points** will be your life's currency.
 
-On the contrary, if you assign **5 points** to an **Offense** like smoking, you lose *50 minutes* of your free time whenever you smoke. 
+- Each **point** is worth **10 minutes**. So if you assign **1 point** to a **Mission** like reading, you earn **1 point** every time you complete. That's 10 minutes of free time!
 
-Pretty simple, yet pretty effective. This way, each time you spend your free time doing something fun, you will know why you totally deserve it!
+- On the contrary, if you assign **5 points** to an **Offense** like smoking, you lose *50 minutes* of your free time whenever you smoke. 
+
+- And then you have the hybrid **Tasks**, where assigning **3 points** to a **Task** means you earn **3 points** if you complete it, and lose **3 points** if you fail it. 
+
+- To spend your points, head to the point spending tab, choose the number of points you want to use, and set a timer afterwards to keep track of the time you've used up.
+
+- Pretty simple, yet pretty effective. This way, whenever you spend your free time doing something fun, you will know why you totally deserve it!
 
 ---
 
@@ -43,8 +51,8 @@ Pretty simple, yet pretty effective. This way, each time you spend your free tim
 - **Local Storage**: Your data stays on your device. Full privacy.
 - **Fully customizable**: Set your own missions, offenses, tasks, and point values.
 - **Time converter**: Points are automatically converted to minutes of free time.
-- **Lightweight**: No accounts, no servers, just you.
 - **Statistics tracking**: See your total points earned, missions completed, offenses committed, and more.
+- **Lightweight**: No accounts, no servers, just you.
 
 ---
 
