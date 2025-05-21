@@ -1,5 +1,6 @@
 # Lifese 2.0
 
+
 Have you ever felt a guilty pleasure before? You know, just having fun in your free time, but feeling your conscience weighing on you because you are "*wasting time*". This usually leads to:
 1. Not having fun during your free time
 2. Working all the time instead, which will inevitably lead to **burnout**
@@ -8,6 +9,10 @@ If only there were a way to accurately convert your hard work into free time...
 
 
 **Oh, right! That's *exactly* why I made Lifese!**
+
+---
+
+![Lifese 2.0 Preview](./docs/Lifese-2.0.png)
 
 ---
 
