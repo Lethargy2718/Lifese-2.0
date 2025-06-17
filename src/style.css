@@ -401,6 +401,16 @@ td:first-child::before {
 
 #spendFormBtn {
     margin-top: 2em;
+
+    &:disabled {
+        opacity: 0.6;
+
+        &:hover {
+            cursor: default;
+            background-color: var(--clr-success);
+        }
+    }
+    
 }
 
 /************FORM****************/

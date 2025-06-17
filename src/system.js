@@ -140,7 +140,7 @@ class User {
     }
 
     removePoints(lostPoints) {
-        this.points = Math.max(0, this.points - lostPoints);
+        this.points = this.points - lostPoints;
         this.totalLostPoints += lostPoints;
     }
 

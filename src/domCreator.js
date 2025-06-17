@@ -229,9 +229,10 @@ export function displaySpend(user, reset = true) {
     const pointsInput = document.createElement("input");
     pointsInput.classList.add("points-input");
     pointsInput.type = "number";
-    pointsInput.placeholder = "Enter points to spend";
+    pointsInput.placeholder = user.points > 0 ? "Enter points to spend" : "";
     pointsInput.min = 0;
     pointsInput.max = user.points;
+    pointsInput.disabled = user.points <= 0;
     pointsContainer.appendChild(pointsInput);
 
     // Form
@@ -241,9 +242,10 @@ export function displaySpend(user, reset = true) {
 
     // Button
     const spendBtn = document.createElement("button");
-    spendBtn.textContent = "Spend Points";
+    spendBtn.textContent = user.points <= 0 ? "Not enough points." : "Spend Points";
     spendBtn.classList.add("card-button", "success");
     spendBtn.id = "spendFormBtn";
+    spendBtn.disabled = user.points <= 0;
     pointsForm.appendChild(spendBtn);
 
     // Append the form to the container
